@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>tic-toc-toe</Tic-toc-toe></title>
+   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="bg-gradient-to-r from-orange-600 via-red-500 to-amber-400
+"></body>
+
+<div  class="flex flex-col w-4/5 mx-auto mt-10  items-center">
+  <input id="first" class="w-4/5 h-10 bg-white rounded-md px-4 text-amber-700 outline-none mt-3"type="text" placeholder="Enter First Player's Name "/>
+
+  <input id="second"  class="w-4/5 h-10 bg-white rounded-md px-4 text-amber-700 outline-none mt-3"type="text" placeholder="Enter Second Player's Name"/>
+   <button id="play-btn" class="px-8 py-3 rounded-2xl 
+bg-gradient-to-r from-orange-500 via-amber-500 to-yellow-400
+text-white font-bold text-lg
+shadow-lg hover:shadow-2xl
+transform hover:scale-105 active:scale-95
+transition-all duration-300 mt-5 mb-5 h-10 flex justify-center items-center">
+   Play
+</button>
+  <div class="grid grid-cols-3 gap-2">
+    <button id="btn1" class="btn h-12 w-20  rounded-md bg-gradient-to-r from-black to-white font-bold text-3xl text-red-600"></button>
+    <button id="btn2"  class="btn h-12 w-20  rounded-md bg-gradient-to-r from-black to-white font-bold text-3xl text-red-600"></button>
+    <button  id="btn3" class="btn h-12 w-20  rounded-md bg-gradient-to-r from-black to-white font-bold text-3xl text-red-600"></button>
+    <button id="btn4"  class="btn h-12 w-20  rounded-md bg-gradient-to-r from-black to-white font-bold text-3xl text-red-600"></button>
+    <button  id="btn5" class="btn h-12 w-20  rounded-md bg-gradient-to-r from-black to-white font-bold text-3xl text-red-600"></button>
+    <button id="btn6"  class=" btn h-12 w-20  rounded-md bg-gradient-to-r from-black to-white font-bold text-3xl text-red-600"></button>
+    <button id="btn7"  class="btn h-12 w-20  rounded-md bg-gradient-to-r from-black to-white font-bold text-3xl text-red-600"></button>
+    <button  id="btn8"  class=" btn h-12 w-20  rounded-md bg-gradient-to-r from-black to-white font-bold text-3xl text-red-600"></button>
+    <button  id="btn9"  class="btn h-12 w-20  rounded-md bg-gradient-to-r from-black to-white font-bold text-3xl text-red-600"></button>
+  </div>
+          <h1 id="status" class="mt-4 font-bold text-3xl text-pink-50 text-center">Status: Match is going to Start</h1>
+  
+          <div class="flex flex-row gap-4">
+    
+      <button id="reset" class="px-8 py-3 rounded-2xl 
+bg-gradient-to-r from-orange-500 via-amber-500 to-yellow-400
+text-white font-bold text-lg
+shadow-lg hover:shadow-2xl
+transform hover:scale-105 active:scale-95
+transition-all duration-300 mt-5 mb-5 h-10 flex justify-center items-center">
+   Reset
+</button>
+  <button id="newBtn" class="px-8 py-3 rounded-2xl 
+bg-gradient-to-r from-orange-500 via-amber-500 to-yellow-400
+text-white font-bold text-lg
+shadow-lg hover:shadow-2xl
+transform hover:scale-105 active:scale-95
+transition-all duration-300 mt-5 mb-5 h-10 flex justify-center items-center">
+   New Game
+</button>
+  </div>
+  </div>
+  <script>
+
+    const  frstName=document.getElementById("first");
+    const status=document.getElementById("status");
+    const originalStatus = status.innerText;
+    const playBtn=document.getElementById("play-btn");
+    const btns=document.getElementsByClassName("btn");
+    const resetBtn=document.getElementById("reset");
+    const newBtn=document.getElementById("newBtn");
+
+    frstName.addEventListener("focus",function(){
+      status.style.color="White";
+      status.innerText="Player 1 typing..."
+    })
+
+    frstName.addEventListener("blur", () => {
+  
+  status.innerText = originalStatus;
+});
+
+
+     const  ScndName=document.getElementById("second");
+
+     ScndName.addEventListener("focus",function(){
+      status.style.color="White";
+      status.innerText="Player 2 typing..."
+      
+    })
+
+    ScndName.addEventListener("blur", () => {
+
+  status.innerText = originalStatus;
+});
+
+playBtn.addEventListener("click",function(){
+   if(frstName.value==="" && ScndName.value===""){
+    status.innerText="Warning:Both Players are missing"
+    status.style.color="Black";
+  }
+ else if( frstName.value===""){
+    status.innerText="Warning:Player 1 Missing"
+    status.style.color="Black";
+  }
+  else if( ScndName.value===""){
+    status.innerText="Warning:Player 2 Missing"
+    status.style.color="Black";
+  }
+
+  
+
+  else{
+    status.innerText=`Game on \n ${frstName.value}'s turn`;
+    playBtn.disabled=true;
+  }
+    
+})
+
+ let  pc='X';
+const btnMap = {
+  "btn1": 0,
+  "btn2": 1,
+  "btn3": 2,
+  "btn4": 3,
+  "btn5": 4,
+  "btn6": 5,
+  "btn7": 6,
+  "btn8": 7,
+  "btn9": 8
+};
+
+ 
+ let arr= new Array(9).fill("");
+
+ 
+ 
+for(const btn of btns){
+ 
+  btn.addEventListener("click",function(){
+
+    if(!playBtn.disabled){
+     status.innerText="Play button must be clicked";
+    }
+     else if(pc==="X"){
+        btn.innerText='X';
+        arr[btnMap[btn.id]]='X';
+        pc='O';
+         status.innerText=`Game on \n ${ScndName.value}'s turn`;
+         btn.disabled=true;
+        
+      }
+      else{
+         btn.innerText='O'
+          arr[btnMap[btn.id]]='O';
+         pc='X';
+          status.innerText=`Game on \n ${frstName.value}'s turn`;
+          btn.disabled=true;
+
+          
+      }
+      // Row 1
+if(arr[0]===arr[1] && arr[1]===arr[2] && arr[0] != ''){
+    if(arr[0]==='X'){
+       status.innerText=`Congratulationsss ${frstName.value} Won!!!`;
+    }
+    else{
+       status.innerText=`Congratulationsss ${ScndName.value} Won!!!`;
+    }
+    for (const b of btns) {
+    b.disabled = true;
+}
+}
+// Row 2
+else if(arr[3]===arr[4] && arr[4]===arr[5] && arr[3] != ''){
+    if(arr[3]==='X'){
+       status.innerText=`Congratulationsss ${frstName.value} Won!!!`;
+    }
+    else{
+       status.innerText=`Congratulationsss ${ScndName.value} Won!!!`;
+    }
+    for (const b of btns) {
+    b.disabled = true;
+}
+}
+// Row 3
+else if(arr[6]===arr[7] && arr[7]===arr[8] && arr[6] != ''){
+    if(arr[6]==='X'){
+       status.innerText=`Congratulationsss ${frstName.value} Won!!!`;
+    }
+    else{
+       status.innerText=`Congratulationsss ${ScndName.value} Won!!!`;
+    }
+    for (const b of btns) {
+    b.disabled = true;
+}
+}
+
+// Column 1
+else if(arr[0]===arr[3] && arr[3]===arr[6] && arr[0] != ''){
+    if(arr[0]==='X'){
+       status.innerText=`Congratulationsss ${frstName.value} Won!!!`;
+    }
+    else{
+       status.innerText=`Congratulationsss ${ScndName.value} Won!!!`;
+    }
+    for (const b of btns) {
+    b.disabled = true;
+}
+}
+// Column 2
+else if(arr[1]===arr[4] && arr[4]===arr[7] && arr[1] != ''){
+    if(arr[1]==='X'){
+       status.innerText=`Congratulationsss ${frstName.value} Won!!!`;
+    }
+    else{
+       status.innerText=`Congratulationsss ${ScndName.value} Won!!!`;
+    }
+    for (const b of btns) {
+    b.disabled = true;
+}
+}
+// Column 3
+else if(arr[2]===arr[5] && arr[5]===arr[8] && arr[2] != ''){
+    if(arr[2]==='X'){
+       status.innerText=`Congratulationsss ${frstName.value} Won!!!`;
+    }
+    else{
+       status.innerText=`Congratulationsss ${ScndName.value} Won!!!`;
+    }
+    for (const b of btns) {
+    b.disabled = true;
+}
+}
+
+// Diagonal 1
+else if(arr[0]===arr[4] && arr[4]===arr[8] && arr[0] != ''){
+    if(arr[0]==='X'){
+       status.innerText=`Congratulationsss ${frstName.value} Won!!!`;
+    }
+    else{
+       status.innerText=`Congratulationsss ${ScndName.value} Won!!!`;
+    }
+    for (const b of btns) {
+    b.disabled = true;
+}
+}
+
+// Diagonal 2
+else if(arr[2]===arr[4] && arr[4]===arr[6] && arr[2] != ''){
+    if(arr[2]==='X'){
+       status.innerText=`Congratulationsss ${frstName.value} Won!!!`;
+    }
+    else{
+       status.innerText=`Congratulationsss ${ScndName.value} Won!!!`;
+    }
+    for (const b of btns) {
+    b.disabled = true;
+}
+}
+
+  })
+
+}
+
+let resetConfirm = false; 
+
+resetBtn.addEventListener("click", function() {
+    if (!resetConfirm) {
+        
+        status.innerText = "Are you sure to reset? Click the reset button again";
+        resetConfirm = true;
+        return; 
+    }
+
+    
+    status.innerText = originalStatus;
+    pc = 'X'; 
+    for (let i = 0; i < arr.length; i++) arr[i] = ""; 
+    for (const bt of btns) {
+        bt.innerText = "";
+        bt.disabled = false; 
+    }
+
+    resetConfirm = false; 
+});
+
+let newConfirm=false;
+newBtn.addEventListener("click",function(){
+
+  if(!newConfirm){
+     status.innerText="Are you sure to start a new match?Click New Game button again to confirm"
+     newConfirm=true;
+     return;
+  }
+  status.innerText = originalStatus;
+  pc='X';
+  frstName.value="";
+  ScndName.value="";
+  playBtn.disabled=false;
+
+  for(let i=0;i<9;i++){
+    arr[i]="";
+  }
+
+  for(const button of btns){
+    button.innerText="";
+  }
+
+})
+
+  </script>
+</body>
+</html>
